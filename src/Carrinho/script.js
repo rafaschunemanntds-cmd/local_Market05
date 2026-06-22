@@ -1,7 +1,7 @@
 $(document).ready(function(){
     const carrinho = JSON.parse(localStorage.getItem("carrinho")) || []
     const listElement = $("#lista")
-    const totalElement = $('total')
+    const totalElement = $('#total')
 
     function exibirCarrinho(){
         listElement.empty()
@@ -13,6 +13,17 @@ $(document).ready(function(){
             const removeButton = $("<button>").text("❌").css("margin-left", "10px").click(function(){
                 removerItem(index)
             })
+
+            listItem.append(removeButton)
+            listElement.append(listItem)
+
+            totalPreco += item.preco 
         })
+        totalElement.text(`Total: $${totalPreco.toFixed(2)}`)
+    }
+    function removerItem(index){
+        carrinho.splice(index, 1)
+        localStorage.setItem("carrinho", JSON.stringify(carrinho))
+        exibirCarrinho()
     }
 })
